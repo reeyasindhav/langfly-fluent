@@ -1,4 +1,5 @@
-import { createFileRoute, Link, Outlet, redirect, useRouter } from "@tanstack/react-router";
+import { createFileRoute, Link, Outlet, useRouter } from "@tanstack/react-router";
+import { useEffect } from "react";
 import { useAuth } from "../../lib/auth-context";
 import { useData } from "../../lib/data-context";
 import { Button } from "../../components/ui/button";
@@ -22,15 +23,9 @@ import {
   LogOut,
   Menu,
   Home,
-  Settings,
 } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated")({
-  beforeLoad: ({ context, location }) => {
-    if (!context.auth?.isAuthenticated) {
-      throw redirect({ to: "/login", search: { redirect: location.href } });
-    }
-  },
   component: AuthenticatedLayout,
 });
 
@@ -45,9 +40,23 @@ const navItems = [
 ];
 
 function AuthenticatedLayout() {
-  const { user, logout } = useAuth();
+  const { user, isAuthenticated, logout } = useAuth();
   const { data } = useData();
   const router = useRouter();
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.navigate({ to: "/login", search: { redirect: window.location.pathname } });
+    }
+  }, [isAuthenticated, router]);
+
+  if (!isAuthenticated) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-coral border-t-transparent" />
+      </div>
+    );
+  }
 
   const handleLogout = () => {
     logout();
@@ -56,7 +65,6 @@ function AuthenticatedLayout() {
 
   return (
     <div className="min-h-screen bg-background font-sans">
-      {/* Top bar */}
       <header className="sticky top-0 z-30 border-b border-border bg-background/85 backdrop-blur-sm">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 lg:px-8">
           <div className="flex items-center gap-3">
@@ -125,7 +133,6 @@ function AuthenticatedLayout() {
 
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <div className="flex items-start gap-8 py-8">
-          {/* Sidebar */}
           <aside className="sticky top-24 hidden w-56 shrink-0 lg:block">
             <nav className="flex flex-col gap-1">
               {navItems.map((item) => (
