@@ -11,7 +11,8 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
-import { AuthProvider, useAuth } from "../lib/auth-context";
+import { AuthProvider } from "../lib/auth-context";
+import { DataProvider } from "../lib/data-context";
 
 function NotFoundComponent() {
   return (
