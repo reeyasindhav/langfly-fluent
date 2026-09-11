@@ -1,0 +1,30 @@
+{
+  "roadmap": {
+    "title": "My Roadmap",
+    "subtitle": "Your personalized path to fluent conversations",
+    "overallPath": "Overall Path",
+    "currentLevel": "Current Level",
+    "modulesCompleted": "{{completed}} / {{total}} modules",
+    "xpEarned": "+{{xp}} XP earned today",
+    "streak": "{{count}} day streak",
+    "unitStatus": {
+      "completed": "Completed",
+      "inProgress": "In Progress",
+      "upcoming": "Upcoming",
+      "locked": "Locked"
+    },
+    "unitTypes": {
+      "dialogue": "Dialogue",
+      "vocab": "Vocabulary",
+      "grammar": "Grammar",
+      "checkpoint": "Checkpoint"
+    },
+    "startLesson": "Start lesson",
+    "continueLesson": "Continue lesson",
+    "beginLesson": "Begin lesson",
+    "lessonDuration": "{{duration}} min",
+    "xpReward": "+{{xp}} XP",
+    "lockedMessage": "Complete previous units to unlock",
+    "progress": "Progress: {{percent}}%"
+  }
+}

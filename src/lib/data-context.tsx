@@ -84,19 +84,95 @@ function makeInitialData(): AppData {
     recallRate: 94,
     confidence: 7.2,
     units: [
-      { id: "u1", title: "Greetings & Small Talk", totalModules: 12, completedModules: 12, status: "completed" },
-      { id: "u2", title: "Ordering & Dining Out", totalModules: 12, completedModules: 7, status: "in-progress" },
-      { id: "u3", title: "Travel & Directions", totalModules: 14, completedModules: 0, status: "upcoming" },
-      { id: "u4", title: "Workplace & Meetings", totalModules: 10, completedModules: 0, status: "locked" },
-      { id: "u5", title: "Describing People & Places", totalModules: 12, completedModules: 0, status: "locked" },
-      { id: "u6", title: "Opinions & Debates", totalModules: 10, completedModules: 0, status: "locked" },
+      {
+        id: "u1",
+        title: "Greetings & Small Talk",
+        totalModules: 12,
+        completedModules: 12,
+        status: "completed",
+      },
+      {
+        id: "u2",
+        title: "Ordering & Dining Out",
+        totalModules: 12,
+        completedModules: 7,
+        status: "in-progress",
+      },
+      {
+        id: "u3",
+        title: "Travel & Directions",
+        totalModules: 14,
+        completedModules: 0,
+        status: "upcoming",
+      },
+      {
+        id: "u4",
+        title: "Workplace & Meetings",
+        totalModules: 10,
+        completedModules: 0,
+        status: "locked",
+      },
+      {
+        id: "u5",
+        title: "Describing People & Places",
+        totalModules: 12,
+        completedModules: 0,
+        status: "locked",
+      },
+      {
+        id: "u6",
+        title: "Opinions & Debates",
+        totalModules: 10,
+        completedModules: 0,
+        status: "locked",
+      },
     ],
     flashcards: [
-      { id: "f1", front: "la bibliothèque", back: "the library", language: "French", example: "Je vais à la bibliothèque.", status: "review", dueInDays: 2 },
-      { id: "f2", front: "el aeropuerto", back: "the airport", language: "Spanish", example: "El aeropuerto está lejos.", status: "learning", dueInDays: 0 },
-      { id: "f3", front: "die Rechnung", back: "the bill / check", language: "German", example: "Die Rechnung, bitte.", status: "review", dueInDays: 1 },
-      { id: "f4", front: "il tavolo", back: "the table", language: "Italian", example: "Il tavolo vicino alla finestra.", status: "mastered", dueInDays: 5 },
-      { id: "f5", front: "pleuvoir", back: "to rain", language: "French", example: "Il va pleuvoir demain.", status: "new", dueInDays: 0 },
+      {
+        id: "f1",
+        front: "la bibliothèque",
+        back: "the library",
+        language: "French",
+        example: "Je vais à la bibliothèque.",
+        status: "review",
+        dueInDays: 2,
+      },
+      {
+        id: "f2",
+        front: "el aeropuerto",
+        back: "the airport",
+        language: "Spanish",
+        example: "El aeropuerto está lejos.",
+        status: "learning",
+        dueInDays: 0,
+      },
+      {
+        id: "f3",
+        front: "die Rechnung",
+        back: "the bill / check",
+        language: "German",
+        example: "Die Rechnung, bitte.",
+        status: "review",
+        dueInDays: 1,
+      },
+      {
+        id: "f4",
+        front: "il tavolo",
+        back: "the table",
+        language: "Italian",
+        example: "Il tavolo vicino alla finestra.",
+        status: "mastered",
+        dueInDays: 5,
+      },
+      {
+        id: "f5",
+        front: "pleuvoir",
+        back: "to rain",
+        language: "French",
+        example: "Il va pleuvoir demain.",
+        status: "new",
+        dueInDays: 0,
+      },
     ],
     challenges: [
       { id: "c1", title: "Recall 10 dining words", xp: 10, completed: true, type: "recall" },
@@ -106,9 +182,33 @@ function makeInitialData(): AppData {
       { id: "c5", title: "Review 5 overdue cards", xp: 10, completed: false, type: "recall" },
     ],
     tutors: [
-      { id: "t1", name: "Elena", language: "Spanish", level: "B1 friendly", rating: 4.9, slots: ["Today, 16:00", "Tomorrow, 10:30", "Tomorrow, 18:00"], avatarColor: "bg-coral" },
-      { id: "t2", name: "Marco", language: "Italian", level: "A2–B2", rating: 4.8, slots: ["Today, 17:00", "Tomorrow, 09:00", "Fri, 11:00"], avatarColor: "bg-mint" },
-      { id: "t3", name: "Sophie", language: "French", level: "A1–C1", rating: 5.0, slots: ["Today, 15:00", "Tomorrow, 14:00", "Sat, 10:00"], avatarColor: "bg-lemon" },
+      {
+        id: "t1",
+        name: "Elena",
+        language: "Spanish",
+        level: "B1 friendly",
+        rating: 4.9,
+        slots: ["Today, 16:00", "Tomorrow, 10:30", "Tomorrow, 18:00"],
+        avatarColor: "bg-coral",
+      },
+      {
+        id: "t2",
+        name: "Marco",
+        language: "Italian",
+        level: "A2–B2",
+        rating: 4.8,
+        slots: ["Today, 17:00", "Tomorrow, 09:00", "Fri, 11:00"],
+        avatarColor: "bg-mint",
+      },
+      {
+        id: "t3",
+        name: "Sophie",
+        language: "French",
+        level: "A1–C1",
+        rating: 5.0,
+        slots: ["Today, 15:00", "Tomorrow, 14:00", "Sat, 10:00"],
+        avatarColor: "bg-lemon",
+      },
     ],
     bookings: [],
     weeklyActivity: [40, 55, 70, 60, 90, 100, 20],
@@ -179,7 +279,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
                 status: rating === "again" ? "learning" : rating === "good" ? "review" : "mastered",
                 dueInDays: rating === "again" ? 0 : rating === "good" ? 2 : 5,
               }
-            : f
+            : f,
         ),
       };
     });
@@ -200,7 +300,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
         ...prev,
         bookings: [booking, ...prev.bookings],
         tutors: prev.tutors.map((t) =>
-          t.id === tutorId ? { ...t, slots: t.slots.filter((s) => s !== slot) } : t
+          t.id === tutorId ? { ...t, slots: t.slots.filter((s) => s !== slot) } : t,
         ),
         xp: prev.xp + 25,
       };
@@ -215,14 +315,16 @@ export function DataProvider({ children }: { children: ReactNode }) {
         ...prev,
         bookings: prev.bookings.filter((b) => b.id !== id),
         tutors: prev.tutors.map((t) =>
-          t.id === booking.tutorId ? { ...t, slots: [...t.slots, booking.slot] } : t
+          t.id === booking.tutorId ? { ...t, slots: [...t.slots, booking.slot] } : t,
         ),
       };
     });
   };
 
   return (
-    <DataContext.Provider value={{ data, updateData, completeChallenge, rateFlashcard, bookSession, cancelBooking }}>
+    <DataContext.Provider
+      value={{ data, updateData, completeChallenge, rateFlashcard, bookSession, cancelBooking }}
+    >
       {children}
     </DataContext.Provider>
   );

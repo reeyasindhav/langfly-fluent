@@ -13,7 +13,12 @@ interface AuthContextValue {
   user: User | null;
   isAuthenticated: boolean;
   login: (email: string, password: string) => Promise<{ error?: string }>;
-  signup: (data: { email: string; password: string; name: string; language: string }) => Promise<{ error?: string }>;
+  signup: (data: {
+    email: string;
+    password: string;
+    name: string;
+    language: string;
+  }) => Promise<{ error?: string }>;
   logout: () => void;
 }
 
@@ -57,7 +62,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return {};
   };
 
-  const signup = async (data: { email: string; password: string; name: string; language: string }) => {
+  const signup = async (data: {
+    email: string;
+    password: string;
+    name: string;
+    language: string;
+  }) => {
     const users = getUsers();
     if (users.some((u) => u.email.toLowerCase() === data.email.toLowerCase())) {
       return { error: "An account with this email already exists." };

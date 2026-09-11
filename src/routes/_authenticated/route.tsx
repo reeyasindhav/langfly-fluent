@@ -1,8 +1,9 @@
-import { createFileRoute, Link, Outlet, useRouter } from "@tanstack/react-router";
-import { useEffect } from "react";
+import { createFileRoute, Link, Outlet, useRouter, useLocation } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import { useAuth } from "../../lib/auth-context";
 import { useData } from "../../lib/data-context";
 import { Button } from "../../components/ui/button";
+import { SignOutDialog } from "../../components/SignOutDialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,19 +11,19 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../../components/ui/dropdown-menu";
-import { Avatar, AvatarFallback } from "../../components/ui/avatar";
 import { Sheet, SheetContent, SheetTrigger } from "../../components/ui/sheet";
 import {
-  Flame,
-  Map,
+  BookOpen,
   Layers,
-  Trophy,
-  CalendarDays,
-  TrendingUp,
-  User,
-  LogOut,
+  Target,
+  Video,
+  Settings,
+  Bell,
+  Search,
+  ChevronDown,
+  LayoutGrid,
   Menu,
-  Home,
+  LogOut,
 } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated")({
@@ -30,19 +31,19 @@ export const Route = createFileRoute("/_authenticated")({
 });
 
 const navItems = [
-  { to: "/dashboard", icon: Home, label: "Dashboard" },
-  { to: "/roadmap", icon: Map, label: "Roadmap" },
-  { to: "/flashcards", icon: Layers, label: "Flashcards" },
-  { to: "/challenges", icon: Trophy, label: "Challenges" },
-  { to: "/practice", icon: CalendarDays, label: "Practice" },
-  { to: "/progress", icon: TrendingUp, label: "Progress" },
-  { to: "/profile", icon: User, label: "Profile" },
+  { to: "/dashboard", icon: LayoutGrid, label: "Today's menu" },
+  { to: "/roadmap", icon: BookOpen, label: "My roadmap" },
+  { to: "/flashcards", icon: Layers, label: "Flashcards", badge: "124" },
+  { to: "/challenges", icon: Target, label: "Challenges" },
+  { to: "/practice", icon: Video, label: "Live practice" },
 ];
 
 function AuthenticatedLayout() {
-  const { user, isAuthenticated, logout } = useAuth();
+  const { user, isAuthenticated } = useAuth();
   const { data } = useData();
   const router = useRouter();
+  const location = useLocation();
+  const [signOutOpen, setSignOutOpen] = useState(false);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -52,165 +53,272 @@ function AuthenticatedLayout() {
 
   if (!isAuthenticated) {
     return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="h-8 w-8 animate-spin rounded-full border-2 border-coral border-t-transparent" />
+      <div className="flex min-h-screen items-center justify-center bg-[#fbf9f4]">
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-[#163b2e] border-t-transparent" />
       </div>
     );
   }
 
-  const handleLogout = () => {
-    logout();
-    router.navigate({ to: "/" });
-  };
+  const userName = user?.name || "Alex Morgan";
+  const userInitials = userName
+    .split(" ")
+    .map((n) => n[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+  const userLang = user?.language || "French";
 
   return (
-    <div className="min-h-screen bg-background font-sans">
-      <header className="sticky top-0 z-30 border-b border-border bg-background/85 backdrop-blur-sm">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 lg:px-8">
-          <div className="flex items-center gap-3">
-            <Link to="/dashboard" className="flex items-center gap-2">
-              <span className="grid size-8 place-items-center rounded-lg bg-brand text-cream text-lg font-bold">L</span>
-              <span className="hidden text-xl font-bold tracking-tight sm:inline">Langfly</span>
-            </Link>
-            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-brand/40 hidden sm:inline-block border border-brand/15 px-2 py-0.5 rounded">
-              v2.4
+    <div className="min-h-screen bg-[#fbf9f4] text-[#163b2e] font-sans antialiased flex">
+      {/* Fixed Left Sidebar (Desktop) */}
+      <aside className="hidden lg:flex w-64 shrink-0 flex-col justify-between border-r border-[#e8e4dc] bg-[#fbf9f4] p-5 fixed top-0 bottom-0 z-30">
+        <div>
+          {/* Logo */}
+          <Link to="/dashboard" className="flex items-center gap-2.5 px-2 py-1 mb-8">
+            <div className="size-8 rounded-lg bg-[#163b2e] flex items-center justify-center text-[#d7e780]">
+              {/* Four leaf / kitchen clover symbol */}
+              <svg
+                viewBox="0 0 24 24"
+                className="size-5 fill-current"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M12 2a4 4 0 0 0-4 4c0 1.6 1 3 2.4 3.6A4 4 0 0 0 6.8 12 4 4 0 0 0 2 16a4 4 0 0 0 4 4c1.6 0 3-1 3.6-2.4A4 4 0 0 0 12 19.2a4 4 0 0 0 4 2.8 4 4 0 0 0 4-4c0-1.6-1-3-2.4-3.6A4 4 0 0 0 19.2 12 4 4 0 0 0 22 8a4 4 0 0 0-4-4c-1.6 0-3 1-3.6 2.4A4 4 0 0 0 12 2z" />
+              </svg>
+            </div>
+            <span className="text-2xl font-bold tracking-tight text-[#163b2e] font-serif">
+              langfly
+            </span>
+          </Link>
+
+          {/* Section: YOUR KITCHEN */}
+          <div className="mb-2 px-3">
+            <span className="font-mono text-[10px] uppercase tracking-[0.2em] font-bold text-[#727d74]">
+              YOUR KITCHEN
             </span>
           </div>
 
-          <div className="flex items-center gap-3">
-            <div className="hidden items-center gap-2 rounded-lg bg-cream px-3 py-1.5 md:flex">
-              <Flame className="size-4 text-coral" />
-              <span className="text-sm font-semibold">{data.streak}</span>
-              <span className="text-xs text-muted-foreground">day streak</span>
+          {/* Navigation Links */}
+          <nav className="space-y-1.5">
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = location.pathname === item.to;
+
+              return (
+                <Link
+                  key={item.to}
+                  to={item.to}
+                  className={`flex items-center justify-between rounded-xl px-3.5 py-2.5 text-sm font-semibold transition-all ${
+                    isActive
+                      ? "bg-[#d7e780] text-[#163b2e] shadow-2xs"
+                      : "text-[#3b473e] hover:bg-[#eae5da]/60 hover:text-[#163b2e]"
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <Icon
+                      className={`size-4.5 ${isActive ? "text-[#163b2e]" : "text-[#58645b]"}`}
+                    />
+                    <span>{item.label}</span>
+                  </div>
+                  {item.badge && (
+                    <span
+                      className={`font-mono text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                        isActive ? "bg-[#163b2e] text-[#d7e780]" : "bg-[#163b2e] text-[#d7e780]"
+                      }`}
+                    >
+                      {item.badge}
+                    </span>
+                  )}
+                </Link>
+              );
+            })}
+          </nav>
+        </div>
+
+        {/* Bottom Sidebar: Weekly Goal + User Footer */}
+        <div className="space-y-4">
+          {/* Weekly Goal Card */}
+          <div className="rounded-2xl bg-[#163b2e] p-4 text-white shadow-sm">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-bold text-white tracking-wide">Weekly goal</span>
+              <div className="size-4 rounded-full border border-white/30 flex items-center justify-center text-white">
+                <span className="size-1.5 rounded-full bg-[#d7e780]" />
+              </div>
             </div>
-            <div className="hidden items-center gap-1.5 rounded-lg bg-cream px-3 py-1.5 md:flex">
-              <Trophy className="size-4 text-lemon" />
-              <span className="text-sm font-semibold">{data.xp.toLocaleString()}</span>
-              <span className="text-xs text-muted-foreground">XP</span>
+            <p className="text-xs text-white/80 leading-relaxed mt-1.5 font-normal">
+              You're 2 sessions away from a perfect week.
+            </p>
+
+            <div className="mt-3.5 h-1.5 w-full rounded-full bg-white/20 overflow-hidden">
+              <div
+                className="h-full rounded-full bg-[#d7e780] transition-all duration-500"
+                style={{ width: "68%" }}
+              />
             </div>
+
+            <div className="mt-2.5 flex items-center justify-between text-[11px] font-mono text-[#d7e780] font-semibold">
+              <span>12 / 18 lessons</span>
+              <span>68%</span>
+            </div>
+          </div>
+
+          {/* User Profile Card */}
+          <div className="flex items-center justify-between pt-2 border-t border-[#e8e4dc]">
+            <Link to="/profile" className="flex items-center gap-3 group">
+              <div className="size-9 rounded-full bg-[#d7e780] text-[#163b2e] font-bold text-xs grid place-items-center shrink-0">
+                {userInitials}
+              </div>
+              <div className="text-left">
+                <p className="text-sm font-bold text-[#163b2e] group-hover:text-black leading-tight">
+                  {userName}
+                </p>
+                <p className="text-xs text-[#717a73] mt-0.5">Learning {userLang}</p>
+              </div>
+            </Link>
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="gap-2 px-2">
-                  <Avatar className="size-8">
-                    <AvatarFallback className="bg-brand text-cream text-sm font-semibold">
-                      {user?.name?.charAt(0) ?? "?"}
-                    </AvatarFallback>
-                  </Avatar>
-                  <span className="hidden max-w-[120px] truncate text-sm font-medium sm:inline">
-                    {user?.name}
-                  </span>
-                </Button>
+                <button
+                  type="button"
+                  className="p-1.5 rounded-lg text-[#717a73] hover:text-[#163b2e] hover:bg-[#eae5da]/60 transition-colors cursor-pointer"
+                  title="Settings & Logout"
+                >
+                  <Settings className="size-4" />
+                </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48">
+              <DropdownMenuContent align="end" className="w-48 bg-white">
                 <DropdownMenuItem asChild>
-                  <Link to="/profile">Profile</Link>
+                  <Link to="/profile">Profile Settings</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link to="/progress">Progress</Link>
+                  <Link to="/progress">Analytics & Progress</Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={handleLogout} className="text-destructive">
-                  <LogOut className="mr-2 size-4" />
-                  Log out
+                <DropdownMenuItem
+                  onSelect={(e) => {
+                    e.preventDefault();
+                    setSignOutOpen(true);
+                  }}
+                  className="text-destructive cursor-pointer"
+                >
+                  <LogOut className="mr-2 size-4" /> Log out
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
+          </div>
+        </div>
+      </aside>
 
+      {/* Main Content Area (offset by 256px on desktop) */}
+      <div className="flex-1 lg:ml-64 flex flex-col min-h-screen">
+        {/* Top Navbar */}
+        <header className="sticky top-0 z-20 bg-[#fbf9f4]/90 backdrop-blur-md px-6 lg:px-10 h-16 flex items-center justify-between border-b border-[#e8e4dc]/60">
+          <div className="flex items-center gap-3">
+            {/* Mobile hamburger menu */}
             <Sheet>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="lg:hidden">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="lg:hidden text-[#163b2e] cursor-pointer"
+                >
                   <Menu className="size-5" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="left" className="w-64 bg-background">
-                <MobileNav onLogout={handleLogout} />
+              <SheetContent side="left" className="w-64 bg-[#fbf9f4] p-5">
+                <div className="flex items-center gap-2.5 mb-8">
+                  <div className="size-8 rounded-lg bg-[#163b2e] flex items-center justify-center text-[#d7e780]">
+                    <svg viewBox="0 0 24 24" className="size-5 fill-current">
+                      <path d="M12 2a4 4 0 0 0-4 4c0 1.6 1 3 2.4 3.6A4 4 0 0 0 6.8 12 4 4 0 0 0 2 16a4 4 0 0 0 4 4c1.6 0 3-1 3.6-2.4A4 4 0 0 0 12 19.2a4 4 0 0 0 4 2.8 4 4 0 0 0 4-4c0-1.6-1-3-2.4-3.6A4 4 0 0 0 19.2 12 4 4 0 0 0 22 8a4 4 0 0 0-4-4c-1.6 0-3 1-3.6 2.4A4 4 0 0 0 12 2z" />
+                    </svg>
+                  </div>
+                  <span className="text-2xl font-bold font-serif text-[#163b2e]">langfly</span>
+                </div>
+                <nav className="space-y-1.5">
+                  {navItems.map((item) => {
+                    const Icon = item.icon;
+                    const isActive = location.pathname === item.to;
+                    return (
+                      <Link
+                        key={item.to}
+                        to={item.to}
+                        className={`flex items-center justify-between rounded-xl px-3.5 py-2.5 text-sm font-semibold transition-all ${
+                          isActive
+                            ? "bg-[#d7e780] text-[#163b2e]"
+                            : "text-[#3b473e] hover:bg-[#eae5da]/60"
+                        }`}
+                      >
+                        <div className="flex items-center gap-3">
+                          <Icon className="size-4.5" />
+                          <span>{item.label}</span>
+                        </div>
+                        {item.badge && (
+                          <span className="font-mono text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#163b2e] text-[#d7e780]">
+                            {item.badge}
+                          </span>
+                        )}
+                      </Link>
+                    );
+                  })}
+                </nav>
+                <div className="mt-auto pt-8 border-t border-[#e8e4dc]">
+                  <button
+                    type="button"
+                    onClick={() => setSignOutOpen(true)}
+                    className="flex w-full items-center gap-3 px-3 py-2 text-sm font-semibold text-destructive cursor-pointer"
+                  >
+                    <LogOut className="size-4" /> Log out
+                  </button>
+                </div>
               </SheetContent>
             </Sheet>
+
+            {/* Left Status: Date & Week */}
+            <p className="text-xs text-[#717a73] font-medium hidden sm:block">
+              Wednesday, September 14 <span className="mx-1">•</span> Week 8 of your journey
+            </p>
           </div>
-        </div>
-      </header>
 
-      <div className="mx-auto max-w-7xl px-4 lg:px-8">
-        <div className="flex items-start gap-8 py-8">
-          <aside className="sticky top-24 hidden w-56 shrink-0 lg:block">
-            <nav className="flex flex-col gap-1">
-              {navItems.map((item) => (
-                <NavLink key={item.to} item={item} />
-              ))}
-            </nav>
-
-            <div className="mt-8 rounded-xl border border-border bg-card p-4">
-              <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-muted-foreground mb-2">
-                Weekly goal
-              </p>
-              <div className="flex items-center justify-between text-sm font-medium">
-                <span>{Math.min(data.weeklyActivity.reduce((a, b) => a + b, 0), 500)}/500 XP</span>
-              </div>
-              <div className="mt-2 h-2 rounded-full bg-brand/10 overflow-hidden">
-                <div
-                  className="h-full rounded-full bg-mint"
-                  style={{ width: `${Math.min((data.weeklyActivity.reduce((a, b) => a + b, 0) / 500) * 100, 100)}%` }}
-                />
-              </div>
-            </div>
-          </aside>
-
-          <main className="min-w-0 flex-1 animate-fade-in">
-            <Outlet />
-          </main>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function NavLink({ item }: { item: { to: string; icon: React.ElementType; label: string } }) {
-  const Icon = item.icon;
-  return (
-    <Link
-      to={item.to}
-      activeProps={{ className: "bg-brand text-cream hover:bg-brand" }}
-      className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-brand/70 transition-colors hover:bg-brand/5 hover:text-brand"
-    >
-      <Icon className="size-4" />
-      {item.label}
-    </Link>
-  );
-}
-
-function MobileNav({ onLogout }: { onLogout: () => void }) {
-  return (
-    <div className="flex h-full flex-col">
-      <div className="flex items-center gap-2 py-4">
-        <span className="grid size-8 place-items-center rounded-lg bg-brand text-cream text-lg font-bold">L</span>
-        <span className="text-xl font-bold tracking-tight">Langfly</span>
-      </div>
-      <nav className="mt-4 flex flex-col gap-1">
-        {navItems.map((item) => {
-          const Icon = item.icon;
-          return (
+          {/* Right Top Bar Items */}
+          <div className="flex items-center gap-3">
+            {/* Language Selector Pill */}
             <Link
-              key={item.to}
-              to={item.to}
-              activeProps={{ className: "bg-brand text-cream" }}
-              className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-brand/70 transition-colors hover:bg-brand/5"
+              to="/profile"
+              className="flex items-center gap-2 rounded-full border border-[#e8e4dc] bg-white px-3 py-1.5 text-xs font-bold text-[#163b2e] shadow-2xs hover:border-[#163b2e]/30 transition-colors"
             >
-              <Icon className="size-4" />
-              {item.label}
+              <span className="size-4 rounded-full bg-[#e8a382] flex items-center justify-center text-[10px] text-white">
+                🇫🇷
+              </span>
+              <span>{userLang}</span>
+              <ChevronDown className="size-3 text-[#717a73]" />
             </Link>
-          );
-        })}
-      </nav>
-      <div className="mt-auto pt-6">
-        <button
-          onClick={onLogout}
-          className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-destructive transition-colors hover:bg-destructive/5"
-        >
-          <LogOut className="size-4" />
-          Log out
-        </button>
+
+            {/* Search Button */}
+            <button
+              type="button"
+              className="size-8 rounded-full flex items-center justify-center text-[#556157] hover:text-[#163b2e] hover:bg-[#eae5da]/60 transition-colors"
+              title="Search"
+            >
+              <Search className="size-4" />
+            </button>
+
+            {/* Notification Bell */}
+            <button
+              type="button"
+              className="size-8 rounded-full flex items-center justify-center text-[#556157] hover:text-[#163b2e] hover:bg-[#eae5da]/60 transition-colors relative"
+              title="Notifications"
+            >
+              <Bell className="size-4" />
+              <span className="absolute top-1.5 right-1.5 size-2 rounded-full bg-[#d96b52] ring-2 ring-[#fbf9f4]" />
+            </button>
+          </div>
+        </header>
+
+        {/* Main Routed Page Content */}
+        <main className="flex-1 px-6 lg:px-10 py-6 max-w-7xl w-full mx-auto">
+          <Outlet />
+        </main>
       </div>
+      <SignOutDialog open={signOutOpen} onOpenChange={setSignOutOpen} />
     </div>
   );
 }

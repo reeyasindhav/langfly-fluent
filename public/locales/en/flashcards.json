@@ -1,0 +1,58 @@
+{
+  "flashcards": {
+    "title": "Flashcards",
+    "subtitle": "Retain vocabulary permanently with spaced repetition",
+    "dueNow": "Due now",
+    "dueSoon": "Due soon",
+    "noCardsDue": "No cards due right now! 🎉",
+    "allCaughtUp": "You're all caught up. Come back later for more reviews.",
+    "reviewQueue": "Review queue: {{count}} cards",
+    "newCards": "{{count}} new",
+    "learningCards": "{{count}} learning",
+    "reviewCards": "{{count}} review",
+    "masteredCards": "{{count}} mastered",
+    "startSession": "Start session",
+    "continueSession": "Continue session",
+    "sessionComplete": "Session complete! 🎉",
+    "cardsReviewed": "{{count}} cards reviewed",
+    "xpEarned": "+{{xp}} XP earned",
+    "accuracy": "Accuracy: {{percent}}%",
+    "rating": {
+      "again": "Again",
+      "good": "Good",
+      "easy": "Easy",
+      "againDesc": "Reset interval",
+      "goodDesc": "Normal interval",
+      "easyDesc": "Extended interval"
+    },
+    "card": {
+      "front": "Front",
+      "back": "Back",
+      "example": "Example",
+      "flip": "Tap to reveal",
+      "showAnswer": "Show answer",
+      "knowIt": "I knew it",
+      "didntKnow": "Didn't know"
+    },
+    "stats": {
+      "sessionTime": "Session time",
+      "cardsPerMinute": "Cards/min",
+      "retentionRate": "Retention rate",
+      "currentStreak": "Current streak"
+    },
+    "filters": {
+      "all": "All",
+      "new": "New",
+      "learning": "Learning",
+      "review": "Review",
+      "mastered": "Mastered",
+      "language": "Language",
+      "due": "Due date"
+    },
+    "empty": {
+      "title": "No flashcards yet",
+      "subtitle": "Start your roadmap to unlock flashcards",
+      "cta": "Go to Roadmap"
+    }
+  }
+}

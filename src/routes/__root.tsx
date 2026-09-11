@@ -6,6 +6,7 @@ import {
   useRouter,
   HeadContent,
   Scripts,
+  useLocation,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 
@@ -13,6 +14,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { AuthProvider } from "../lib/auth-context";
 import { DataProvider } from "../lib/data-context";
+import { Footer } from "../components/Footer";
 
 function NotFoundComponent() {
   return (
@@ -80,10 +82,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Langfly — Learn, Retain, Speak" },
-      { name: "description", content: "Langfly pairs spaced flashcards with live speaking practice so new words stick and your confidence follows." },
+      {
+        name: "description",
+        content:
+          "Langfly pairs spaced flashcards with live speaking practice so new words stick and your confidence follows.",
+      },
       { name: "author", content: "Langfly" },
       { property: "og:title", content: "Langfly — Learn, Retain, Speak" },
-      { property: "og:description", content: "Langfly pairs spaced flashcards with live speaking practice so new words stick and your confidence follows." },
+      {
+        property: "og:description",
+        content:
+          "Langfly pairs spaced flashcards with live speaking practice so new words stick and your confidence follows.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@langfly" },
@@ -94,6 +104,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: appCss,
       },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "manifest", href: "/manifest.json" },
+      { rel: "apple-touch-icon", href: "/icons/icon-192x192.png" },
+      { rel: "mask-icon", href: "/icons/icon-512x512.png", color: "#163b2e" },
+      { name: "theme-color", content: "#163b2e" },
       {
         rel: "preconnect",
         href: "https://fonts.googleapis.com",
@@ -105,7 +119,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..800;1,6..72,400..800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap",
       },
     ],
   }),
@@ -131,12 +145,34 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const location = useLocation();
+  const isAuthApp =
+    location.pathname === "/dashboard" ||
+    location.pathname === "/roadmap" ||
+    location.pathname === "/flashcards" ||
+    location.pathname === "/practice" ||
+    location.pathname === "/challenges" ||
+    location.pathname === "/progress" ||
+    location.pathname === "/profile";
+  const isAuthFlow = location.pathname === "/login" || location.pathname === "/signup";
+  const showFooter = !isAuthFlow && !isAuthApp;
+
+  useEffect(() => {
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/sw.js").catch((err) => {
+        console.log("SW registration failed:", err);
+      });
+    }
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <DataProvider>
-          <Outlet />
+          <div className="flex min-h-screen flex-col">
+            <Outlet />
+            {showFooter && <Footer />}
+          </div>
         </DataProvider>
       </AuthProvider>
     </QueryClientProvider>

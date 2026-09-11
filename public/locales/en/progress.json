@@ -1,0 +1,39 @@
+{
+  "progress": {
+    "title": "Progress",
+    "subtitle": "Track your language learning journey",
+    "overview": "Overview",
+    "vocabulary": "Vocabulary",
+    "speaking": "Speaking",
+    "consistency": "Consistency",
+    "statistics": "Statistics",
+    "wordsKnown": "Words known",
+    "speakingMinutes": "Speaking minutes",
+    "recallRate": "Recall rate",
+    "confidence": "Confidence",
+    "currentLevel": "Current level",
+    "longestStreak": "Longest streak",
+    "totalXp": "Total XP",
+    "weeklyActivity": "Weekly activity",
+    "monthlyProgress": "Monthly progress",
+    "vocabularyGrowth": "Vocabulary growth",
+    "speakingProgress": "Speaking progress",
+    "streakHistory": "Streak history",
+    "levelProgress": "Level progress",
+    "nextLevel": "Next level: {{level}}",
+    "xpToNextLevel": "{{xp}} XP to next level",
+    "exportData": "Export data",
+    "dataRange": "Data range",
+    "last7Days": "Last 7 days",
+    "last30Days": "Last 30 days",
+    "last90Days": "Last 90 days",
+    "allTime": "All time",
+    "noData": "No data available for this period",
+    "charts": {
+      "wordsPerDay": "Words learned per day",
+      "minutesPerDay": "Speaking minutes per day",
+      "recallOverTime": "Recall rate over time",
+      "streakCalendar": "Streak calendar"
+    }
+  }
+}

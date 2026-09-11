@@ -1,9 +1,11 @@
 # Langfly — Full UI/UX Build Plan
 
 ## Direction
+
 Typographic Stepped: warm cream background, Space Grotesk/Space Mono, coral/mint/lemon accents, card-based surfaces, clear typographic hierarchy.
 
 ## Pages (10)
+
 1. `/` — Landing page (hero, roadmap preview, flashcards preview, challenges preview, stats strip, footer)
 2. `/login` — Sign in form
 3. `/signup` — Create account form
@@ -16,12 +18,14 @@ Typographic Stepped: warm cream background, Space Grotesk/Space Mono, coral/mint
 10. `/profile` — User profile and settings
 
 ## Auth / Data
+
 - localStorage-only mock auth and progress data (per user request: mock data only).
 - Auth context: sign up, log in, log out, current user.
 - Data context: streak, XP, words known, roadmap progress, flashcards due, challenges, booked sessions.
 - Persist state in `localStorage`; seed initial demo data on first visit.
 
 ## Tech
+
 - TanStack Router file routes under `src/routes/`.
 - Pathless `_authenticated` layout for pages 4–10; redirects to `/login` if not signed in.
 - Public routes 1–3.
@@ -30,6 +34,7 @@ Typographic Stepped: warm cream background, Space Grotesk/Space Mono, coral/mint
 - CSS keyframe animations in `src/styles.css`.
 
 ## Visual polish
+
 - Page transitions / fade-in sections.
 - 3D flip animation on flashcards.
 - Hover lifts on cards.
@@ -37,5 +42,6 @@ Typographic Stepped: warm cream background, Space Grotesk/Space Mono, coral/mint
 - Mobile responsive sidebar sheet.
 
 ## Verification
+
 - Build/dev passes.
 - Spot-check each route loads and interactions update localStorage state.

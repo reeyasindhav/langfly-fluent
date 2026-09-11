@@ -1,0 +1,37 @@
+{
+  "challenges": {
+    "title": "Challenges",
+    "subtitle": "Gamified bite-sized language drills and daily streak bonuses",
+    "dailyQuota": "Daily Quota",
+    "xpEarnedToday": "XP Earned Today",
+    "activeStreak": "Active Streak",
+    "completed": "Completed",
+    "available": "Available",
+    "locked": "Locked",
+    "xp": "XP",
+    "start": "Start",
+    "continue": "Continue",
+    "complete": "Complete",
+    "retry": "Retry",
+    "correct": "Correct! +{{xp}} XP",
+    "incorrect": "Not quite. Try again!",
+    "timeRemaining": "Time remaining: {{time}}",
+    "challengeComplete": "Challenge complete! +{{xp}} XP",
+    "streakBonus": "Streak bonus! +{{xp}} XP",
+    "types": {
+      "recall": "Recall",
+      "listen": "Listen",
+      "speak": "Speak",
+      "book": "Book a session"
+    },
+    "difficulty": {
+      "easy": "Easy",
+      "medium": "Medium",
+      "hard": "Hard"
+    },
+    "empty": {
+      "title": "No challenges available",
+      "subtitle": "Check back tomorrow for new challenges"
+    }
+  }
+}
